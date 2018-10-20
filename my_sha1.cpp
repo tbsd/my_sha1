@@ -10,6 +10,7 @@ using namespace std;
 
 uint32_t leftrotate(uint32_t set, unsigned count);
 vector<uint32_t> sha1 (vector<uint8_t> &message);
+string vec_to_str(vector<uint32_t> &vec);
 
 int main(int argc, char **argv) {
   if (argc != 2) {
@@ -29,7 +30,7 @@ uint32_t leftrotate(uint32_t set, unsigned count) {
   return (set << shift) | (set >> (32-shift));
 }
 
-string vec_to_str(vector<uint32_t> vec) {
+string vec_to_str(vector<uint32_t> &vec) {
   stringstream hex_str;
   for (auto i : vec)
     hex_str << hex << i;
