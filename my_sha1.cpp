@@ -8,7 +8,7 @@
 using namespace std;
 
 uint32_t leftrotate(uint32_t set, unsigned count);
-bitset<160> sha1 (vector<uint8_t> &message);
+vector<uint32_t> sha1 (vector<uint8_t> &message);
 
 int main(int argc, char **argv) {
   if (argc != 2) {
@@ -18,7 +18,7 @@ int main(int argc, char **argv) {
   // ifstream input( argv[1], std::ios::binary );
   // vector<uint8_t> message(istreambuf_iterator<char>(input),
       // (istreambuf_iterator<char>()));
-  
+  vector<uint32_t> result = sha1(message);
   return 0;
 }
 
@@ -27,7 +27,7 @@ uint32_t leftrotate(uint32_t set, unsigned count) {
   return (set << shift) | (set >> (32-shift));
 }
 
-bitset<160> sha1 (vector<uint8_t> &message) {
+vector<uint32_t> sha1 (vector<uint8_t> &message) {
   vector<uint32_t> exp_message;
   add_extra_bits(&message, &exp_message);
   add_length(&message, &exp_message);
@@ -36,6 +36,5 @@ bitset<160> sha1 (vector<uint8_t> &message) {
   for (auto i = exp_message.begin(); i != exp_message.end(); i += 16) {
     round(i, i + 16, &A, &B, &C, &D, &E)
   }
-  return (bitset<160>(A) << 128) | (bitset<160>(B) << 96) |
-    (bitset<160>(C) << 64) | (bitset<160>(D) << 32) | (bitset<160>(E));
+  return {A, B, C, D, E};
 }
