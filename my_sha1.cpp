@@ -11,6 +11,9 @@ using namespace std;
 uint32_t leftrotate(uint32_t set, unsigned count);
 vector<uint32_t> sha1 (vector<uint8_t> &message);
 string vec_to_str(vector<uint32_t> &vec);
+vector<uint32_t> add_extra_bits(const vector<uint8_t> *message);
+void add_length(uint64_t length, vector<uint32_t> *dest);
+void round(vector<uint32_t>::iterator begin, vector<uint32_t>::iterator end);
 
 int main(int argc, char **argv) {
   if (argc != 2) {
