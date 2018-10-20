@@ -39,8 +39,7 @@ string vec_to_str(vector<uint32_t> &vec) {
 }
 
 vector<uint32_t> sha1 (vector<uint8_t> &message) {
-  vector<uint32_t> exp_message;
-  add_extra_bits(&message, &exp_message);
+  vector<uint32_t> exp_message = add_extra_bits(&message);
   add_length(&message, &exp_message);
   uint32_t A = 0x67452301, B = 0xEFCDAB89, C = 0x98BADCFE, D = 0x10325476, 
            E = 0xC3D2E1F0;
@@ -49,3 +48,4 @@ vector<uint32_t> sha1 (vector<uint8_t> &message) {
   }
   return {A, B, C, D, E};
 }
+
