@@ -48,7 +48,7 @@ vector<uint32_t> sha1 (vector<uint8_t> &message) {
   vector<uint32_t> exp_message = add_extra_bits(&message);
   add_length(message.size(), &exp_message);
   for (auto i = exp_message.begin(); i != exp_message.end(); i += 16) {
-    round(i, i + 16)
+    round(i, i + 17);
   }
   return {A, B, C, D, E};
 }
