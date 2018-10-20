@@ -10,7 +10,6 @@ using namespace std;
 
 uint32_t leftrotate(uint32_t set, unsigned count);
 void sha1 (vector<uint8_t> &message);
-string vec_to_str(vector<uint32_t> &vec);
 vector<uint32_t> add_extra_bits(const vector<uint8_t> *message);
 void add_length(uint64_t length, vector<uint32_t> *dest);
 void round(vector<uint32_t>::iterator begin, vector<uint32_t>::iterator end);
@@ -27,21 +26,18 @@ int main(int argc, char **argv) {
   vector<uint8_t> message(istreambuf_iterator<char>(input),
       (istreambuf_iterator<char>()));
 
-  vector<uint32_t> result = sha1(message);
-  cout << vec_to_str(result) << endl;
+  sha1(message);
+
+  stringstream hex_str;
+  hex_str << hex << A << B << C << D << E;
+  cout << hex_str.str() << endl;
+
   return 0;
 }
 
 uint32_t leftrotate(uint32_t set, unsigned count) {
   unsigned shift = count % 32;
   return (set << shift) | (set >> (32-shift));
-}
-
-string vec_to_str(vector<uint32_t> &vec) {
-  stringstream hex_str;
-  for (auto i : vec)
-    hex_str << hex << i;
-  return hex_str.str();
 }
 
 void sha1 (vector<uint8_t> &message) {
