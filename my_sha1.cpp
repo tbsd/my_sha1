@@ -5,6 +5,7 @@
 #include <iterator>
 #include <algorithm>
 #include <bitset>
+#include <sstream>
 using namespace std;
 
 uint32_t leftrotate(uint32_t set, unsigned count);
@@ -18,6 +19,7 @@ int main(int argc, char **argv) {
   ifstream input( argv[1], std::ios::binary );
   vector<uint8_t> message(istreambuf_iterator<char>(input),
       (istreambuf_iterator<char>()));
+
   vector<uint32_t> result = sha1(message);
   return 0;
 }
@@ -25,6 +27,13 @@ int main(int argc, char **argv) {
 uint32_t leftrotate(uint32_t set, unsigned count) {
   unsigned shift = count % 32;
   return (set << shift) | (set >> (32-shift));
+}
+
+string vec_to_str(vector<uint32_t> vec) {
+  stringstream hex_str;
+  for (auto i : vec)
+    hex_str << hex << i;
+  return hex_str.str();
 }
 
 vector<uint32_t> sha1 (vector<uint8_t> &message) {
