@@ -15,6 +15,9 @@ vector<uint32_t> add_extra_bits(const vector<uint8_t> *message);
 void add_length(uint64_t length, vector<uint32_t> *dest);
 void round(vector<uint32_t>::iterator begin, vector<uint32_t>::iterator end);
 
+uint32_t A = 0x67452301, B = 0xEFCDAB89, C = 0x98BADCFE, D = 0x10325476, 
+         E = 0xC3D2E1F0;
+
 int main(int argc, char **argv) {
   if (argc != 2) {
     cout << "Usage: my_sha1 file" << endl;
@@ -44,10 +47,8 @@ string vec_to_str(vector<uint32_t> &vec) {
 vector<uint32_t> sha1 (vector<uint8_t> &message) {
   vector<uint32_t> exp_message = add_extra_bits(&message);
   add_length(message.size(), &exp_message);
-  uint32_t A = 0x67452301, B = 0xEFCDAB89, C = 0x98BADCFE, D = 0x10325476, 
-           E = 0xC3D2E1F0;
   for (auto i = exp_message.begin(); i != exp_message.end(); i += 16) {
-    round(i, i + 16, &A, &B, &C, &D, &E)
+    round(i, i + 16)
   }
   return {A, B, C, D, E};
 }
