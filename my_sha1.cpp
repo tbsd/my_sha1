@@ -22,6 +22,7 @@ int main(int argc, char **argv) {
       (istreambuf_iterator<char>()));
 
   vector<uint32_t> result = sha1(message);
+  cout << vec_to_str(result) << endl;
   return 0;
 }
 
