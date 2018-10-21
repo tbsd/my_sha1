@@ -23,14 +23,14 @@ uint32_t A = 0x67452301,
          E = 0xC3D2E1F0;
 
 int main(int argc, char **argv) {
-  if (argc != 2) {
-    cout << "Usage: \nmy_sha1 file\nor\nmy_sha1 *string*" << endl;
+  if (argc < 2) {
+    cout << "Usage: \nmy_sha1 file\nor\nmy_sha1 -s 'string'" << endl;
     return 1;
   }
   vector<uint8_t> message;
-  if (argv[1][0] == '*' && argv[1][strlen(argv[1]) - 1] == '*') {
-    string s(argv[1]);
-    message = vector<uint8_t>(s.begin() + 1, s.end() - 1);
+  if (argc == 3 && string(argv[1]) == "-s") {
+    string s(argv[2]);
+    message = vector<uint8_t>(s.begin(), s.end());
   } else {
     ifstream input( argv[1], std::ios::binary );
     if (!input.good()) {
