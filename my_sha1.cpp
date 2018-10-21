@@ -1,13 +1,6 @@
 #include <iostream>
-#include <cstdint>
 #include <vector>
 #include <fstream>
-#include <iterator>
-#include <algorithm>
-#include <bitset>
-#include <sstream>
-#include <iomanip>
-#include <cstring>
 using namespace std;
 
 uint32_t leftrotate(uint32_t set, unsigned count);
