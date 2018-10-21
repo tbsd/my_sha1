@@ -27,23 +27,22 @@ int main(int argc, char **argv) {
     cout << "Usage: \nmy_sha1 file\nor\nmy_sha1 *string*" << endl;
     return 1;
   }
-  vector<uint8_t> *message;
+  vector<uint8_t> message;
   if (argv[1][0] == '*' && argv[1][strlen(argv[1]) - 1] == '*') {
     string s(argv[1]);
-    message = new vector<uint8_t>(s.begin() + 1, s.end() - 1);
+    message = vector<uint8_t>(s.begin() + 1, s.end() - 1);
   } else {
     ifstream input( argv[1], std::ios::binary );
     if (!input.good()) {
       cout << "File not found." << endl;
       return 1;
     }
-    message = new vector<uint8_t>(istreambuf_iterator<char>(input),
+    message = vector<uint8_t>(istreambuf_iterator<char>(input),
         (istreambuf_iterator<char>()));
   }
 
-  sha1(message);
+  sha1(&message);
 
-  delete message;
   printf("%08x%08x%08x%08x%08x\n", A, B, C, D, E);
   return 0;
 }
