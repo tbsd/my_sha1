@@ -62,3 +62,8 @@ vector<uint32_t> add_extra_bits(const vector<uint8_t> *message) {
   return result;
 }
 
+void add_length(uint64_t length, vector<uint32_t> *dest) {
+  dest->push_back(length >> 32);
+  dest->push_back(length);
+  return;
+}
