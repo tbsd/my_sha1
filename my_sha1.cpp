@@ -14,7 +14,10 @@ vector<uint32_t> add_extra_bits(const vector<uint8_t> *message);
 void add_length(uint64_t length, vector<uint32_t> *dest);
 void process_block(vector<uint32_t>::iterator begin, vector<uint32_t>::iterator end);
 
-uint32_t A = 0x67452301, B = 0xEFCDAB89, C = 0x98BADCFE, D = 0x10325476, 
+uint32_t A = 0x67452301, 
+         B = 0xEFCDAB89, 
+         C = 0x98BADCFE, 
+         D = 0x10325476, 
          E = 0xC3D2E1F0;
 
 int main(int argc, char **argv) {
@@ -29,7 +32,7 @@ int main(int argc, char **argv) {
   sha1(&message);
 
   stringstream hex_str;
-  hex_str << hex << A << B << C << D << E;
+  hex_str << hex << A << B << C << D << E; // fix for a case of short numbers
   cout << hex_str.str() << endl;
 
   return 0;
@@ -69,7 +72,7 @@ void add_length(uint64_t length, vector<uint32_t> *dest) {
 }
 
 void process_block(vector<uint32_t>::iterator begin, vector<uint32_t>::iterator end) {
-  uint32_t a = A, b = B, c = C, d =D, e = E;
+  uint32_t a = A, b = B, c = C, d = D, e = E;
   vector<uint32_t> block(begin, end);
   for (size_t i = 16; i < 80; ++i) {
     block.push_back(block[i - 3] ^ block[i - 8] ^ block[i - 14] ^ block[i - 16]);
@@ -89,7 +92,7 @@ void process_block(vector<uint32_t>::iterator begin, vector<uint32_t>::iterator 
       f = b ^ c ^ d;
       k = 0xCA62C1D6;
     }
-    tmp = leftrotate(a, 5) + f + block[i] + k;
+    tmp = leftrotate(a, 5) + f + e + block[i] + k;
     e = d;
     d = c;
     c = leftrotate(b, 30);
