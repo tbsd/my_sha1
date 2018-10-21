@@ -7,6 +7,7 @@
 #include <bitset>
 #include <sstream>
 #include <iomanip>
+#include <cstring>
 using namespace std;
 
 uint32_t leftrotate(uint32_t set, unsigned count);
@@ -23,15 +24,26 @@ uint32_t A = 0x67452301,
 
 int main(int argc, char **argv) {
   if (argc != 2) {
-    cout << "Usage: my_sha1 file" << endl;
+    cout << "Usage: \nmy_sha1 file\nor\nmy_sha1 *string*" << endl;
     return 1;
   }
-  ifstream input( argv[1], std::ios::binary );
-  vector<uint8_t> message(istreambuf_iterator<char>(input),
-      (istreambuf_iterator<char>()));
+  vector<uint8_t> *message;
+  if (argv[1][0] == '*' && argv[1][strlen(argv[1]) - 1] == '*') {
+    string s(argv[1]);
+    message = new vector<uint8_t>(s.begin() + 1, s.end() - 1);
+  } else {
+    ifstream input( argv[1], std::ios::binary );
+    if (!input.good()) {
+      cout << "File not found." << endl;
+      return 1;
+    }
+    message = new vector<uint8_t>(istreambuf_iterator<char>(input),
+        (istreambuf_iterator<char>()));
+  }
 
-  sha1(&message);
+  sha1(message);
 
+  delete message;
   printf("%08x%08x%08x%08x%08x\n", A, B, C, D, E);
   return 0;
 }
