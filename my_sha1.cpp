@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <bitset>
 #include <sstream>
+#include <iomanip>
 using namespace std;
 
 uint32_t leftrotate(uint32_t set, unsigned count);
@@ -31,10 +32,7 @@ int main(int argc, char **argv) {
 
   sha1(&message);
 
-  stringstream hex_str;
-  hex_str << hex << A << B << C << D << E; // fix for a case of short numbers
-  cout << hex_str.str() << endl;
-
+  printf("%08x%08x%08x%08x%08x\n", A, B, C, D, E);
   return 0;
 }
 
