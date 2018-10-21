@@ -75,7 +75,7 @@ void process_block(vector<uint32_t>::iterator begin, vector<uint32_t>::iterator 
   uint32_t a = A, b = B, c = C, d = D, e = E;
   vector<uint32_t> block(begin, end);
   for (size_t i = 16; i < 80; ++i) {
-    block.push_back(block[i - 3] ^ block[i - 8] ^ block[i - 14] ^ block[i - 16]);
+    block.push_back(leftrotate(block[i - 3] ^ block[i - 8] ^ block[i - 14] ^ block[i - 16], 1));
   }
   for (size_t i = 0; i < 80; ++i) {
     uint32_t f, k, tmp;
