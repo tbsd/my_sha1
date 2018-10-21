@@ -67,3 +67,39 @@ void add_length(uint64_t length, vector<uint32_t> *dest) {
   dest->push_back(length);
   return;
 }
+
+void process_block(vector<uint32_t>::iterator begin, vector<uint32_t>::iterator end) {
+  uint32_t a = A, b = B, c = C, d =D, e = E;
+  vector<uint32_t> block(begin, end);
+  for (size_t i = 16; i < 80; ++i) {
+    block.push_back(block[i - 3] ^ block[i - 8] ^ block[i - 14] ^ block[i - 16]);
+  }
+  for (size_t i = 0; i < 80; ++i) {
+    uint32_t f, k, tmp;
+    if (i <= 19) {
+      f = (b & c) | ((~b) & d);
+      k = 0x5A827999;
+    } else if (i <= 39) {
+      f = b ^ c ^ d;
+      k = 0x6ED9EBA1;
+    } else if (i <= 59){
+      f = (b & c) | (b & d) | (c & d);
+      k = 0x8F1BBCDC;
+    } else {
+      f = b ^ c ^ d;
+      k = 0xCA62C1D6;
+    }
+    tmp = leftrotate(a, 5) + f + block[i] + k;
+    e = d;
+    d = c;
+    c = leftrotate(b, 30);
+    b = a;
+    a = tmp;
+  }
+  A += a;
+  B += b;
+  C += c;
+  D += d;
+  E += e; 
+  return;
+}
