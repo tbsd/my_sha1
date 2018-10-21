@@ -49,3 +49,16 @@ void sha1 (const vector<uint8_t> *message) {
   return;
 }
 
+vector<uint32_t> add_extra_bits(const vector<uint8_t> *message) {
+  vector<uint8_t> tmp(*message);
+  tmp.push_back(0b10000000);
+  while (tmp.size() % 64 != 56) {
+    tmp.push_back(0);
+  }
+  vector<uint32_t> result;
+  for (auto i = tmp.begin(); i != tmp.end(); i += 4) {
+    result.push_back(((*i << 24) | ((*(i + 1)) << 16 ) | ((*(i + 2)) << 8) | (*(i + 3))));
+  }
+  return result;
+}
+
