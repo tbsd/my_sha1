@@ -12,7 +12,7 @@ uint32_t leftrotate(uint32_t set, unsigned count);
 void sha1 (const vector<uint8_t> *message);
 vector<uint32_t> add_extra_bits(const vector<uint8_t> *message);
 void add_length(uint64_t length, vector<uint32_t> *dest);
-void round(vector<uint32_t>::iterator begin, vector<uint32_t>::iterator end);
+void process_block(vector<uint32_t>::iterator begin, vector<uint32_t>::iterator end);
 
 uint32_t A = 0x67452301, B = 0xEFCDAB89, C = 0x98BADCFE, D = 0x10325476, 
          E = 0xC3D2E1F0;
@@ -44,7 +44,7 @@ void sha1 (const vector<uint8_t> *message) {
   vector<uint32_t> exp_message = add_extra_bits(message);
   add_length(message->size(), &exp_message);
   for (auto i = exp_message.begin(); i != exp_message.end(); i += 16) {
-    round(i, i + 16);
+    process_block(i, i + 16);
   }
   return;
 }
