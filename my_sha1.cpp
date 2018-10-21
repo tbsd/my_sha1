@@ -45,7 +45,7 @@ uint32_t leftrotate(uint32_t set, unsigned count) {
 
 void sha1 (const vector<uint8_t> *message) {
   vector<uint32_t> exp_message = add_extra_bits(message);
-  add_length(message->size(), &exp_message);
+  add_length(message->size() * 8, &exp_message);
   for (auto i = exp_message.begin(); i != exp_message.end(); i += 16) {
     process_block(i, i + 16);
   }
