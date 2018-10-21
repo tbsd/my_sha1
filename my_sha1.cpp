@@ -9,10 +9,10 @@ vector<uint32_t> add_extra_bits(const vector<uint8_t> *message);
 void add_length(uint64_t length, vector<uint32_t> *dest);
 void process_block(vector<uint32_t>::iterator begin, vector<uint32_t>::iterator end);
 
-uint32_t A = 0x67452301, 
-         B = 0xEFCDAB89, 
-         C = 0x98BADCFE, 
-         D = 0x10325476, 
+uint32_t A = 0x67452301,
+         B = 0xEFCDAB89,
+         C = 0x98BADCFE,
+         D = 0x10325476,
          E = 0xC3D2E1F0;
 
 int main(int argc, char **argv) {
@@ -104,6 +104,6 @@ void process_block(vector<uint32_t>::iterator begin, vector<uint32_t>::iterator 
   B += b;
   C += c;
   D += d;
-  E += e; 
+  E += e;
   return;
 }
