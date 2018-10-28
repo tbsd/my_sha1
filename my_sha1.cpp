@@ -20,7 +20,7 @@ int main(int argc, char **argv) {
   if (argc == 2) {
     ifstream input( argv[1], std::ios::binary );
     if (!input.good()) {
-      cout << "File not found." << endl;
+      cerr << "File not found." << endl;
       return 1;
     }
     message = vector<uint8_t>(istreambuf_iterator<char>(input),
@@ -29,7 +29,7 @@ int main(int argc, char **argv) {
     string s(argv[2]);
     message = vector<uint8_t>(s.begin(), s.end());
   } else {
-    cout << "Usage: \nmy_sha1 file\nmy_sha1 -s 'string'" << endl;
+    cerr << "Usage: \nmy_sha1 file\nmy_sha1 -s 'string'" << endl;
     return 1;
   }
 
