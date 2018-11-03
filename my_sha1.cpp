@@ -57,9 +57,7 @@ void sha1 (const vector<uint8_t> *message) {
 vector<uint32_t> add_extra_bits(const vector<uint8_t> *message) {
   vector<uint8_t> tmp(*message);
   tmp.push_back(0b10000000);
-  while (tmp.size() % 64 != 56) {
-    tmp.push_back(0);
-  }
+  tmp.insert(tmp.cend(), (64 - (int)tmp.size() % 64 + 56) % 64, 0);
   vector<uint32_t> result;
   for (auto i = tmp.begin(); i != tmp.end(); i += 4) {
     result.push_back(((*i << 24) | ((*(i + 1)) << 16 ) | ((*(i + 2)) << 8) |
@@ -69,8 +67,7 @@ vector<uint32_t> add_extra_bits(const vector<uint8_t> *message) {
 }
 
 void add_length(uint64_t length, vector<uint32_t> *dest) {
-  dest->push_back(length >> 32);
-  dest->push_back(length);
+  dest->insert(dest->cend(), {(uint32_t)(length >> 32), (uint32_t)(length)});
   return;
 }
 
