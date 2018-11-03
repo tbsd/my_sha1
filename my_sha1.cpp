@@ -7,7 +7,8 @@ uint32_t leftrotate(uint32_t set, unsigned count);
 void sha1 (const vector<uint8_t> *message);
 vector<uint32_t> add_extra_bits(const vector<uint8_t> *message);
 void add_length(uint64_t length, vector<uint32_t> *dest);
-void process_block(vector<uint32_t>::iterator begin, vector<uint32_t>::iterator end);
+void process_block(vector<uint32_t>::iterator begin,
+    vector<uint32_t>::iterator end);
 
 uint32_t A = 0x67452301,
          B = 0xEFCDAB89,
@@ -61,7 +62,8 @@ vector<uint32_t> add_extra_bits(const vector<uint8_t> *message) {
   }
   vector<uint32_t> result;
   for (auto i = tmp.begin(); i != tmp.end(); i += 4) {
-    result.push_back(((*i << 24) | ((*(i + 1)) << 16 ) | ((*(i + 2)) << 8) | (*(i + 3))));
+    result.push_back(((*i << 24) | ((*(i + 1)) << 16 ) | ((*(i + 2)) << 8) |
+          (*(i + 3))));
   }
   return result;
 }
@@ -72,11 +74,13 @@ void add_length(uint64_t length, vector<uint32_t> *dest) {
   return;
 }
 
-void process_block(vector<uint32_t>::iterator begin, vector<uint32_t>::iterator end) {
+void process_block(vector<uint32_t>::iterator begin,
+    vector<uint32_t>::iterator end) {
   uint32_t a = A, b = B, c = C, d = D, e = E;
   vector<uint32_t> block(begin, end);
   for (size_t i = 16; i < 80; ++i) {
-    block.push_back(leftrotate(block[i - 3] ^ block[i - 8] ^ block[i - 14] ^ block[i - 16], 1));
+    block.push_back(leftrotate(block[i - 3] ^ block[i - 8] ^ block[i - 14] ^
+          block[i - 16], 1));
   }
   for (size_t i = 0; i < 80; ++i) {
     uint32_t f, k, tmp;
