@@ -87,7 +87,7 @@ vector<uint32_t> extend_block(const vector<uint32_t> *block) {
   vector<uint32_t> extended(80);
   for (size_t i = 0; i < 16; ++i)
     extended[i] = (*block)[i];
-  for (size_t i = 16; i < 80; ++i) 
+  for (size_t i = 16; i < 80; ++i)
     extended[i] = leftrotate(extended[i - 3] ^
         extended[i - 8] ^ extended[i - 14] ^ extended[i - 16], 1);
   return extended;
@@ -96,7 +96,7 @@ vector<uint32_t> extend_block(const vector<uint32_t> *block) {
 vector<uint32_t> bits_to_block(const char *array, size_t size) {
   vector<uint32_t> result(16, 0);
   size_t trailing_byts = size % 4;
-  for (size_t i = 0; i < size / 4; ++i) 
+  for (size_t i = 0; i < size / 4; ++i)
     result[i] = (((uint8_t)array[i * 4] << 24) |
         ((uint8_t)array[i * 4 + 1] << 16 ) | ((uint8_t)array[i * 4 + 2] << 8) |
         ((uint8_t)array[i * 4 + 3]));
